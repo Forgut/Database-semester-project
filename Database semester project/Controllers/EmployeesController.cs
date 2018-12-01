@@ -80,19 +80,11 @@ namespace Database_semester_project.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: Employees/Delete/5
         public ActionResult Delete(int id)
         {
             var employee = (from e in db.Employees
                             where e.Id == id
                             select e).First();
-            return View(employee);
-        }
-
-        // POST: Employees/Delete/5
-        [HttpPost]
-        public ActionResult Delete(Models.Employees employee)
-        {
             db.Employees.Remove(employee);
             try
             {

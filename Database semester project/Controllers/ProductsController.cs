@@ -87,13 +87,6 @@ namespace Database_semester_project.Controllers
             var product = (from p in db.Products
                            where p.Id == id
                            select p).First();
-            return View(product);
-        }
-
-        // POST: Products/Delete/5
-        [HttpPost]
-        public ActionResult Delete(Models.Products product)
-        {
             db.Products.Remove(product);
             db.SaveChanges();
             return RedirectToAction("Index");

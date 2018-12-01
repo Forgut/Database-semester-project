@@ -87,13 +87,6 @@ namespace Database_semester_project.Controllers
             var order = (from o in db.Orders
                          where o.Id == id
                          select o).First();
-            return View(order);
-        }
-
-        // POST: Orders/Delete/5
-        [HttpPost]
-        public ActionResult Delete(Models.Orders order)
-        {
             db.Orders.Remove(order);
             db.SaveChanges();
             return RedirectToAction("index");

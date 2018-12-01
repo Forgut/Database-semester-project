@@ -87,13 +87,6 @@ namespace Database_semester_project.Controllers
             var task = (from t in db.Tasks
                         where t.Id == id
                         select t).First();
-            return View(task);
-        }
-
-        // POST: Tasks/Delete/5
-        [HttpPost]
-        public ActionResult Delete(Models.Tasks task)
-        {
             db.Tasks.Remove(task);
             db.SaveChanges();
             return RedirectToAction("Index");

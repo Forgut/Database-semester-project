@@ -84,17 +84,10 @@ namespace Database_semester_project.Controllers
         // GET: Ingredients/Delete/5
         public ActionResult Delete(int id)
         {
-            var ingredient = (from i in db.Ingredients
-                              where i.Id == id
-                              select i).First();
-            return View(ingredient);
-        }
-
-        // POST: Ingredients/Delete/5
-        [HttpPost]
-        public ActionResult Delete(Models.Ingredients ingredient)
-        {
-            db.Ingredients.Remove(ingredient);
+                var ingredient = (from i in db.Ingredients
+                                  where i.Id == id
+                                  select i).First();
+                db.Ingredients.Remove(ingredient);
             try
             {
                 db.SaveChanges();
