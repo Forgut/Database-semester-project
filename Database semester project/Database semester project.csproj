@@ -159,6 +159,7 @@
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IngredientsController.cs" />
+    <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="Global.asax.cs">
@@ -283,6 +284,10 @@
     <Content Include="Views\Employees\Edit.cshtml" />
     <Content Include="Views\Employees\Create.cshtml" />
     <Content Include="Views\Employees\Delete.cshtml" />
+    <Content Include="Views\Orders\Details.cshtml" />
+    <Content Include="Views\Orders\Index.cshtml" />
+    <Content Include="Views\Orders\Delete.cshtml" />
+    <Content Include="Views\Orders\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

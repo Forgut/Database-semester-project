@@ -1,0 +1,50 @@
+﻿@model Database_semester_project.Models.Orders
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Orders</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Delivery_price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Delivery_price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customers.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customers.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Products.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Products.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
