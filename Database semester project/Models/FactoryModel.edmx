@@ -47,6 +47,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductID" Type="int" Nullable="false" />
           <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="Product quantity" Type="int" Nullable="false" />
           <Property Name="Price" Type="float" Nullable="false" />
           <Property Name="Delivery price" Type="float" Nullable="false" />
         </EntityType>
@@ -77,6 +78,7 @@
           <Property Name="ProductID" Type="int" Nullable="false" />
           <Property Name="Predicted work time" Type="int" Nullable="false" />
           <Property Name="Actual work time" Type="int" />
+          <Property Name="Produced quantity" Type="int" Nullable="false" />
           <Property Name="Finished" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="FK__Employyes__Emplo__5165187F">
@@ -91,7 +93,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Employyes__TaskI__52593CB8">
+        <Association Name="FK__Employyes__TaskI__76969D2E">
           <End Role="Tasks" Type="Self.Tasks" Multiplicity="1" />
           <End Role="Employyes_Tasks" Type="Self.Employyes_Tasks" Multiplicity="*" />
           <ReferentialConstraint>
@@ -103,7 +105,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Orders__Customer__4D94879B">
+        <Association Name="FK__Orders__Customer__74AE54BC">
           <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
           <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
           <ReferentialConstraint>
@@ -115,7 +117,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Orders__ProductI__4CA06362">
+        <Association Name="FK__Orders__ProductI__73BA3083">
           <End Role="Products" Type="Self.Products" Multiplicity="1" />
           <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
           <ReferentialConstraint>
@@ -151,7 +153,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Tasks__ProductID__5AEE82B9">
+        <Association Name="FK__Tasks__ProductID__75A278F5">
           <End Role="Products" Type="Self.Products" Multiplicity="1" />
           <End Role="Tasks" Type="Self.Tasks" Multiplicity="*" />
           <ReferentialConstraint>
@@ -176,15 +178,15 @@
             <End Role="Employees" EntitySet="Employees" />
             <End Role="Employyes_Tasks" EntitySet="Employyes_Tasks" />
           </AssociationSet>
-          <AssociationSet Name="FK__Employyes__TaskI__52593CB8" Association="Self.FK__Employyes__TaskI__52593CB8">
+          <AssociationSet Name="FK__Employyes__TaskI__76969D2E" Association="Self.FK__Employyes__TaskI__76969D2E">
             <End Role="Tasks" EntitySet="Tasks" />
             <End Role="Employyes_Tasks" EntitySet="Employyes_Tasks" />
           </AssociationSet>
-          <AssociationSet Name="FK__Orders__Customer__4D94879B" Association="Self.FK__Orders__Customer__4D94879B">
+          <AssociationSet Name="FK__Orders__Customer__74AE54BC" Association="Self.FK__Orders__Customer__74AE54BC">
             <End Role="Customers" EntitySet="Customers" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK__Orders__ProductI__4CA06362" Association="Self.FK__Orders__ProductI__4CA06362">
+          <AssociationSet Name="FK__Orders__ProductI__73BA3083" Association="Self.FK__Orders__ProductI__73BA3083">
             <End Role="Products" EntitySet="Products" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
@@ -196,7 +198,7 @@
             <End Role="Products" EntitySet="Products" />
             <End Role="Products_Ingredients" EntitySet="Products_Ingredients" />
           </AssociationSet>
-          <AssociationSet Name="FK__Tasks__ProductID__5AEE82B9" Association="Self.FK__Tasks__ProductID__5AEE82B9">
+          <AssociationSet Name="FK__Tasks__ProductID__75A278F5" Association="Self.FK__Tasks__ProductID__75A278F5">
             <End Role="Products" EntitySet="Products" />
             <End Role="Tasks" EntitySet="Tasks" />
           </AssociationSet>
@@ -246,6 +248,7 @@
           <Property Name="Delivery_price" Type="Double" Nullable="false" />
           <NavigationProperty Name="Customers" Relationship="Self.FK__Orders__Customer__4D94879B" FromRole="Orders" ToRole="Customers" />
           <NavigationProperty Name="Products" Relationship="Self.FK__Orders__ProductI__4CA06362" FromRole="Orders" ToRole="Products" />
+          <Property Name="Product_quantity" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -282,6 +285,7 @@
           <Property Name="Finished" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Products" Relationship="Self.FK__Tasks__ProductID__5AEE82B9" FromRole="Tasks" ToRole="Products" />
           <NavigationProperty Name="Employees" Relationship="Self.Employyes_Tasks" FromRole="Tasks" ToRole="Employees" />
+          <Property Name="Produced_quantity" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK__Orders__Customer__4D94879B">
           <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
@@ -419,6 +423,7 @@
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="FactoryModel.Orders">
               <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="Product_quantity" ColumnName="Product quantity" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
@@ -450,6 +455,7 @@
           <EntitySetMapping Name="Tasks">
             <EntityTypeMapping TypeName="FactoryModel.Tasks">
               <MappingFragment StoreEntitySet="Tasks">
+                <ScalarProperty Name="Produced_quantity" ColumnName="Produced quantity" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="Predicted_work_time" ColumnName="Predicted work time" />

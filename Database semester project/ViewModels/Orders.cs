@@ -28,5 +28,24 @@ namespace Database_semester_project.Models
                 return list;
             }
         }
+
+        public List<SelectListItem> ProductsNames
+        {
+            get
+            {
+                var products = (from p in db.Products
+                                select p).ToList();
+                List<SelectListItem> list = new List<SelectListItem>();
+                foreach (var p in products)
+                {
+                    list.Add(new SelectListItem()
+                    {
+                        Value = p.Id.ToString(),
+                        Text = p.Name
+                    });
+                }
+                return list;
+            }
+        }
     }
 }

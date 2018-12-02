@@ -37,6 +37,16 @@ namespace Database_semester_project.Controllers
             if (!ModelState.IsValid)
                 return View(order);
 
+            var productPrice = (from p in db.Products
+                                where p.Id == order.ProductID
+                                select p.Sell_price).First();
+
+            order.Price = productPrice * order.Product_quantity;
+
+            if (order.Price < 2000)
+                order.Delivery_price = 120;
+                
+
             db.Orders.Add(order);
             try
             {

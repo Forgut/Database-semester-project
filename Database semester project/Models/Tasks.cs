@@ -26,6 +26,7 @@ namespace Database_semester_project.Models
         public int Predicted_work_time { get; set; }
         public Nullable<int> Actual_work_time { get; set; }
         public bool Finished { get; set; }
+        public int Produced_quantity { get; set; }
     
         public virtual Products Products { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
