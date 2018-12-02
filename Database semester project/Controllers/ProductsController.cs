@@ -91,5 +91,71 @@ namespace Database_semester_project.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        public ActionResult AddIngredient(int id)
+        {
+            return View(new Models.Products_Ingredients()
+            {
+                ProductID = id
+            });
+        }
+
+        [HttpPost]
+        public ActionResult AddIngredient(Models.Products_Ingredients products_Ingredients)
+        {
+            if (!ModelState.IsValid)
+                return View(products_Ingredients);
+
+            db.Products_Ingredients.Add(products_Ingredients);
+            try
+            {
+                db.SaveChanges();
+            }
+            catch(Exception e)
+            {
+                return View(products_Ingredients);
+            }
+            return RedirectToAction("Details", new { id = products_Ingredients.ProductID });
+        }
+
+        public ActionResult EditIngredientQuantity(int productID, int ingredientID)
+        {
+            var products_ingredients = (from p in db.Products_Ingredients
+                                        where p.ProductID == productID && p.IngredientID == ingredientID
+                                        select p).First();
+            return View(products_ingredients);
+        }
+
+        [HttpPost]
+        public ActionResult EditIngredientQuantity(Models.Products_Ingredients products_Ingredients)
+        {
+            if (!ModelState.IsValid)
+                return View(products_Ingredients);
+
+            var originalProducts_Ingredients = (from p in db.Products_Ingredients
+                                                where p.ProductID == products_Ingredients.ProductID && p.IngredientID == products_Ingredients.IngredientID
+                                                select p).First();
+
+            db.Entry(originalProducts_Ingredients).CurrentValues.SetValues(products_Ingredients);
+            try
+            {
+                db.SaveChanges();
+            }
+            catch(Exception e)
+            {
+                return View(products_Ingredients);
+            }
+            return RedirectToAction("Details", new { id = products_Ingredients.ProductID });
+        }
+
+        public ActionResult DeleteIngredientQuantity(int productID, int ingredientID)
+        {
+            var products_ingredients = (from p in db.Products_Ingredients
+                                        where p.IngredientID == ingredientID && p.ProductID == productID
+                                        select p).First();
+            db.Products_Ingredients.Remove(products_ingredients);
+            db.SaveChanges();
+            return RedirectToAction("Details", new { id = products_ingredients.ProductID });
+        }
     }
 }

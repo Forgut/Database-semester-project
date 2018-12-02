@@ -18,6 +18,7 @@ namespace Database_semester_project.Models
         public Tasks()
         {
             this.Employees = new HashSet<Employees>();
+            ProductLocked = false;
         }
     
         public int Id { get; set; }

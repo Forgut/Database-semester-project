@@ -204,6 +204,8 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\Products.cs" />
+    <Compile Include="ViewModels\Products_Ingredients.cs" />
+    <Compile Include="ViewModels\Tasks.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\Factory.mdf" />
@@ -294,6 +296,9 @@
     <Content Include="Views\Customers\Edit.cshtml" />
     <Content Include="Views\Customers\Create.cshtml" />
     <Content Include="Views\Customers\Index.cshtml" />
+    <Content Include="Views\Products\AddIngredient.cshtml" />
+    <Content Include="Views\Products\EditIngredientQuantity.cshtml" />
+    <Content Include="Views\Tasks\AssignEmployee.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

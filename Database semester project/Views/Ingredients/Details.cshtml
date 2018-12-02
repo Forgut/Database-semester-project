@@ -33,6 +33,24 @@
         <dd>
             @Html.DisplayFor(model => model.Stored_amount)
         </dd>
+        <dt>
+            @Html.Raw("Used in products")
+        </dt>
+        @if (Model.Products_Ingredients.Count > 0)
+        {
+            foreach (var product in Model.Products_Ingredients)
+            {
+                <dd>
+                    @Html.ActionLink(product.ProductName, "../Products/Details", new { id = product.ProductID})
+                </dd>
+            }
+        }
+        else
+        {
+            <dd>
+                @Html.Raw("No products so far")
+            </dd>
+        }
 
     </dl>
 </div>

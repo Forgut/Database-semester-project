@@ -35,12 +35,36 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Products.Name)
+            @Html.Raw("Producing")
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Products.Name)
         </dd>
+        <dt>
+            @Html.Raw("Assigned employees")
+        </dt>
+        @if (Model.Employees.Count > 0)
+        {
+            foreach (var e in Model.Employees)
+            {
+                <dd>
+                    @Html.ActionLink(e.First_name + " " + e.Last_name, "../Employees/Details", new { id = e.Id })
+                </dd>
+            }
+        }
+        else
+        {
+            <dd>
+                @Html.Raw("No workers assigned")
+            </dd>
+        }
+        @if (!Model.Finished)
+        {
+            <dd>
+                @Html.ActionLink("Add new", "AssignEmployee", new { taskID = Model.Id })
+            </dd>
+        }
 
     </dl>
 </div>

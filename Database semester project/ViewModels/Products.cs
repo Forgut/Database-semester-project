@@ -7,6 +7,6 @@ namespace Database_semester_project.Models
 {
     public partial class Products
     {
-
+        
     }
 }

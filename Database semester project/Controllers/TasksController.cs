@@ -24,10 +24,15 @@ namespace Database_semester_project.Controllers
             return View(task);
         }
 
-        // GET: Tasks/Create
-        public ActionResult Create()
+        public ActionResult Create(int productID = -1)
         {
-            return View(new Models.Tasks());
+            var model = new Models.Tasks();
+            if (productID != -1)
+            {
+                model.ProductID = productID;
+                model.ProductLocked = true;
+            }
+            return View(model);
         }
 
         // POST: Tasks/Create
@@ -36,6 +41,7 @@ namespace Database_semester_project.Controllers
         {
             if (!ModelState.IsValid)
                 return View(task);
+            task.Finished = false;
 
             db.Tasks.Add(task);
             try
@@ -46,6 +52,8 @@ namespace Database_semester_project.Controllers
             {
                 return View(task);
             }
+            if (task.ProductLocked)
+                return RedirectToAction("../Products/Details", new { id = task.ProductID });
             return RedirectToAction("Index");
         }
 
@@ -68,7 +76,7 @@ namespace Database_semester_project.Controllers
             var originalTask = (from t in db.Tasks
                                 where t.Id == task.Id
                                 select t).First();
-
+            task.Finished = true;
             db.Entry(originalTask).CurrentValues.SetValues(task);
             try
             {
@@ -89,6 +97,39 @@ namespace Database_semester_project.Controllers
                         select t).First();
             db.Tasks.Remove(task);
             db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult AssignEmployee(int taskID)
+        {
+            var task = (from t in db.Tasks
+                        where t.Id == taskID
+                        select t).First();
+            return View(task);
+        }
+
+        [HttpPost]
+        public ActionResult AssignEmployee(Models.Tasks task)
+        {
+            var originalTask = (from t in db.Tasks
+                                where task.Id == t.Id
+                                select t).First();
+
+            foreach (var e in originalTask.Employees)
+            {
+                if (!task.Employees.Contains(e))
+                    task.Employees.Add(e);
+            }
+            db.Entry(originalTask).CurrentValues.SetValues(task);
+            try
+            {
+                db.SaveChanges();
+            }
+            catch(Exception e)
+            {
+                ViewBag.Exception = e.Message;
+                return View(task);
+            }
             return RedirectToAction("Index");
         }
     }

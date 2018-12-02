@@ -41,6 +41,60 @@
         <dd>
             @Html.DisplayFor(model => model.Stored_amount)
         </dd>
+        <dt>
+            @Html.Raw("Ingredients")
+        </dt>
+        @if (Model.Products_Ingredients.Count > 0)
+        {
+            foreach (var ingredient in Model.Products_Ingredients)
+            {
+                <dd>
+                    @Html.ActionLink(ingredient.IngredientName, "../Ingredients/Details", new { id = ingredient.IngredientID })
+                    @Html.Raw(ingredient.Required_ingredient_amount)
+                    @Html.ActionLink("Change amount", "EditIngredientQuantity", new { productID = Model.Id, ingredientID = ingredient.IngredientID })
+                    @Html.ActionLink("Delete", "DeleteIngredientQuantity", new { productID = Model.Id, ingredientID = ingredient.IngredientID})
+                </dd>
+            }
+        }
+        else
+        {
+            <dd>
+                @Html.Raw("No ingredients yet")
+            </dd>   
+        }
+        <dd>
+            @if (Model.Products_Ingredients.Count() < new Database_semester_project.Models.FactoryEntities().Ingredients.Count())
+            {
+            @Html.ActionLink("Add new", "AddIngredient", new { Model.Id })
+            }
+        </dd>
+
+        <dt>
+            @Html.Raw("Created in tasks")
+        </dt>
+        @if (Model.Tasks.Count > 0)
+        {
+            foreach (var task in Model.Tasks)
+            {
+                if (!task.Finished)
+                {
+                <dd>
+                    @Html.ActionLink(task.Id.ToString(), "../Tasks/Details", new { id = task.Id })
+                    @Html.ActionLink(" Complete", "../Tasks/Edit", new { id = task.Id })
+                </dd>
+                }
+            }
+        }
+        else
+        {
+            <dd>
+                @Html.Raw("No tasks assigned")
+            </dd>
+        }
+        <dd>
+            @Html.ActionLink("Add new", "../Tasks/Create", new { productID = Model.Id })
+        </dd>
+
 
     </dl>
 </div>
