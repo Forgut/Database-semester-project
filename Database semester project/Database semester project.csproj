@@ -203,6 +203,7 @@
       <DependentUpon>FactoryModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\Orders.cs" />
     <Compile Include="ViewModels\Products.cs" />
     <Compile Include="ViewModels\Products_Ingredients.cs" />
     <Compile Include="ViewModels\Tasks.cs" />
@@ -299,6 +300,7 @@
     <Content Include="Views\Products\AddIngredient.cshtml" />
     <Content Include="Views\Products\EditIngredientQuantity.cshtml" />
     <Content Include="Views\Tasks\AssignEmployee.cshtml" />
+    <Content Include="Views\Orders\Create.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

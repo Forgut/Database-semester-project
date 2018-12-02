@@ -10,6 +10,7 @@ namespace Database_semester_project.Models
     {
         private readonly FactoryEntities db = new FactoryEntities();
         public bool ProductLocked { get; set; }
+
         public string ProductName
         {
             get
@@ -44,7 +45,7 @@ namespace Database_semester_project.Models
             get
             {
                 var employees = (from e in db.Employees
-                                 where e.Tasks.Count == 0
+                                 where e.Tasks.Count() == 0 || e.Tasks.Where(t => !t.Finished).Count() == 0
                                  select e).ToList();
                 List<SelectListItem> list = new List<SelectListItem>();
                 foreach (var e in employees)
