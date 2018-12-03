@@ -77,13 +77,20 @@ namespace Database_semester_project.Controllers
                                 where t.Id == task.Id
                                 select t).First();
             task.Finished = true;
+
+            var product = (from p in db.Products
+                           where p.Id == task.ProductID
+                           select p).First();
+            product.Stored_amount += task.Produced_quantity;
+
             db.Entry(originalTask).CurrentValues.SetValues(task);
             try
             {
                 db.SaveChanges();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
+                ViewBag.Exception = e.Message;
                 return View(task);
             }
             return RedirectToAction("Index");

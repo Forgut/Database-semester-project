@@ -50,6 +50,7 @@
           <Property Name="Product quantity" Type="int" Nullable="false" />
           <Property Name="Price" Type="float" Nullable="false" />
           <Property Name="Delivery price" Type="float" Nullable="false" />
+          <Property Name="Completed" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -249,6 +250,7 @@
           <NavigationProperty Name="Customers" Relationship="Self.FK__Orders__Customer__4D94879B" FromRole="Orders" ToRole="Customers" />
           <NavigationProperty Name="Products" Relationship="Self.FK__Orders__ProductI__4CA06362" FromRole="Orders" ToRole="Products" />
           <Property Name="Product_quantity" Type="Int32" Nullable="false" />
+          <Property Name="Completed" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -423,6 +425,7 @@
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="FactoryModel.Orders">
               <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="Completed" ColumnName="Completed" />
                 <ScalarProperty Name="Product_quantity" ColumnName="Product quantity" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />

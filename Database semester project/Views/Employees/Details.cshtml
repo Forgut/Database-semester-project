@@ -33,6 +33,22 @@
         <dd>
             @Html.DisplayFor(model => model.PESEL)
         </dd>
+        <dt>
+            @Html.Raw("Task")
+        </dt>
+        <dd>
+           @if (Model.Tasks.Where(t => !t.Finished).Count() > 0)
+           {
+               int taskID = Model.Tasks.Where(t => !t.Finished).Select(t => t.Id).First();
+               @Html.ActionLink(taskID.ToString(), "../Tasks/Details", new { id = taskID })
+               @Html.Raw(" producing " + Model.Tasks.Where(t => t.Id == taskID).First().ProductName)
+           }
+           else
+           {
+               @Html.Raw("not assigned")
+           }
+
+        </dd>
 
     </dl>
 </div>

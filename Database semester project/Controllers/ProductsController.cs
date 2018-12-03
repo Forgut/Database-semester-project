@@ -69,6 +69,9 @@ namespace Database_semester_project.Controllers
                                    where p.Id == product.Id
                                    select p).First();
 
+           // product.Production_price = (from i in product.Products_Ingredients)
+
+
             db.Entry(originalProduct).CurrentValues.SetValues(product);
             try
             {
@@ -106,6 +109,8 @@ namespace Database_semester_project.Controllers
             if (!ModelState.IsValid)
                 return View(products_Ingredients);
 
+            
+
             db.Products_Ingredients.Add(products_Ingredients);
             try
             {
@@ -115,6 +120,30 @@ namespace Database_semester_project.Controllers
             {
                 return View(products_Ingredients);
             }
+
+            var product = (from p in db.Products
+                           where p.Id == products_Ingredients.ProductID
+                           select p).First();
+            product.Production_price = (int)(from p in db.Products_Ingredients
+                                        join i in db.Ingredients on p.IngredientID equals i.Id
+                                        where p.ProductID == product.Id
+                                        select p.Required_ingredient_amount * i.Price).Sum();
+
+            var originalProduct = (from p in db.Products
+                                   where p.Id == product.Id
+                                   select p).First();
+
+            db.Entry(originalProduct).CurrentValues.SetValues(product);
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                ViewBag.Exception = e.Message;
+                return View(products_Ingredients);
+            }
+
             return RedirectToAction("Details", new { id = products_Ingredients.ProductID });
         }
 
@@ -145,6 +174,30 @@ namespace Database_semester_project.Controllers
             {
                 return View(products_Ingredients);
             }
+
+            var product = (from p in db.Products
+                           where p.Id == products_Ingredients.ProductID
+                           select p).First();
+            product.Production_price = (int)(from p in db.Products_Ingredients
+                                             join i in db.Ingredients on p.IngredientID equals i.Id
+                                             where p.ProductID == product.Id
+                                             select p.Required_ingredient_amount * i.Price).Sum();
+
+            var originalProduct = (from p in db.Products
+                                   where p.Id == product.Id
+                                   select p).First();
+
+            db.Entry(originalProduct).CurrentValues.SetValues(product);
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                ViewBag.Exception = e.Message;
+                return View(products_Ingredients);
+            }
+
             return RedirectToAction("Details", new { id = products_Ingredients.ProductID });
         }
 

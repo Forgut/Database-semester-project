@@ -1,0 +1,32 @@
+﻿@model Database_semester_project.Models.Orders
+
+@{
+    ViewBag.Title = "Complete";
+}
+
+<h2>Complete order #@Model.Id?</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+        <hr />
+        @Html.HiddenFor(model => model.Id)
+
+        @Html.HiddenFor(model => model.ProductID)
+        @Html.HiddenFor(model => model.CustomerID)
+        @Html.HiddenFor(model => model.Price)
+        @Html.HiddenFor(model => model.Delivery_price)
+        @Html.HiddenFor(model => model.Product_quantity)
+        @Html.HiddenFor(model => model.Completed)
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Yes" class="btn btn-default" />
+            </div>
+        </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

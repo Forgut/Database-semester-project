@@ -12,6 +12,8 @@ namespace Database_semester_project.Controllers
         // GET: Orders
         public ActionResult Index()
         {
+            if (TempData["noAddress"] != null)
+                ViewBag.Exception = TempData["noAddress"].ToString();
             return View(db.Orders.ToList());
         }
 
@@ -43,7 +45,11 @@ namespace Database_semester_project.Controllers
 
             order.Price = productPrice * order.Product_quantity;
 
-            if (order.Price < 2000)
+            var customer = (from c in db.Customers
+                            where c.Id == order.CustomerID
+                            select c).First();
+
+            if (order.Price < 2000 && !customer.Regular_customer)
                 order.Delivery_price = 120;
                 
 
@@ -72,12 +78,21 @@ namespace Database_semester_project.Controllers
         [HttpPost]
         public ActionResult Edit(Models.Orders order)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return View(order);
 
             var originalOrder = (from o in db.Orders
                                  where o.Id == order.Id
                                  select o).First();
+
+            var productPrice = (from p in db.Products
+                                where p.Id == order.ProductID
+                                select p.Sell_price).First();
+
+            order.Price = productPrice * order.Product_quantity;
+
+            if (order.Price < 2000)
+                order.Delivery_price = 120;
 
             db.Entry(originalOrder).CurrentValues.SetValues(order);
             try
@@ -101,5 +116,40 @@ namespace Database_semester_project.Controllers
             db.SaveChanges();
             return RedirectToAction("index");
         }
+
+        public ActionResult Complete(int id)
+        {
+            var order = (from o in db.Orders
+                         where o.Id == id
+                         select o).First();
+
+            var originalOrder = (from o in db.Orders
+                                 where o.Id == order.Id
+                                 select o).First();
+            order.Completed = true;
+
+            var product = (from p in db.Products
+                           where p.Id == order.ProductID
+                           select p).First();
+            if (product.Stored_amount > order.Product_quantity)
+                product.Stored_amount -= order.Product_quantity;
+            else
+            {
+                ViewBag.Exception = "There is not enough product in storage to complete order";
+                return RedirectToAction("index");
+            }
+            db.Entry(originalOrder).CurrentValues.SetValues(order);
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                TempData["noAddress"] = e.InnerException.InnerException.Message;
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Index");
+        }
+
     }
 }

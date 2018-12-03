@@ -301,6 +301,7 @@
     <Content Include="Views\Products\EditIngredientQuantity.cshtml" />
     <Content Include="Views\Tasks\AssignEmployee.cshtml" />
     <Content Include="Views\Orders\Create.cshtml" />
+    <Content Include="Views\Orders\Complete.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -12,6 +12,8 @@ namespace Database_semester_project.Controllers
         // GET: Ingredients
         public ActionResult Index()
         {
+            if (TempData["ingredientError"] != null)
+                ViewBag.Exception = TempData["ingredientError"].ToString();
             return View(db.Ingredients.ToList());
         }
 
@@ -94,7 +96,8 @@ namespace Database_semester_project.Controllers
             }
             catch(Exception e)
             {
-                return View(ingredient);
+                TempData["ingredientError"] = e.InnerException.Message;
+                return RedirectToAction("index");
             }
             return RedirectToAction("Index");
         }

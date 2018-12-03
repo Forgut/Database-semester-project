@@ -27,24 +27,26 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Customers.Name)
+            @Html.Raw("Customer")
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Customers.Name)
+            @Html.ActionLink(Model.Customers.Name, "../Customers/Details", new { id = Model.CustomerID })
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Products.Name)
+            @Html.Raw("Product")
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Products.Name)
+            @Html.Raw(" " + Model.Product_quantity + " Qty")
         </dd>
 
     </dl>
 </div>
 <p>
+    @Html.ActionLink("Complete", "Complete", new { id = Model.Id }) |
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index") 
 </p>
