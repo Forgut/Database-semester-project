@@ -226,6 +226,7 @@
       <LastGenOutput>FactoryModel.Context.cs</LastGenOutput>
       <DependentUpon>FactoryModel.edmx</DependentUpon>
     </Content>
+    <Content Include="Models\FactoryModel.edmx.sql" />
     <Content Include="Models\FactoryModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>FactoryModel.edmx</DependentUpon>

@@ -3,14 +3,17 @@
 @{
     ViewBag.Title = "AddIngredient";
 }
-
+@if (TempData["errProduct_addIngredient"] != null)
+{
+    @Html.Raw(TempData["errProduct_addIngredient"])
+}
 <h2>AddIngriedient</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Products_Ingredients</h4>
         <hr />

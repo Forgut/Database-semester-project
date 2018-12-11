@@ -24,6 +24,7 @@ namespace Database_semester_project.Models
         public string First_name { get; set; }
         public string Last_name { get; set; }
         public string PESEL { get; set; }
+        public Nullable<System.DateTime> Edit_time { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tasks> Tasks { get; set; }

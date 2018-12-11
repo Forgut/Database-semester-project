@@ -3,6 +3,10 @@
 @{
     ViewBag.Title = "Products";
 }
+@if (TempData["errProduct"] != null)
+{
+    @Html.Raw(TempData["errProduct"])
+}
 
 <h2>Products</h2>
 
@@ -28,25 +32,25 @@
 
     @foreach (var item in Model)
     {
-    <tr style="border:solid 1px">
-        <td style="border:solid 1px">
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td style="border:solid 1px">
-            @Html.DisplayFor(modelItem => item.Production_price)
-        </td>
-        <td style="border:solid 1px">
-            @Html.DisplayFor(modelItem => item.Sell_price)
-        </td>
-        <td style="border:solid 1px">
-            @Html.DisplayFor(modelItem => item.Stored_amount)
-        </td>
-        <td style="border:solid 1px">
-            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-        </td>
-    </tr>
+        <tr style="border:solid 1px">
+            <td style="border:solid 1px">
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td style="border:solid 1px">
+                @Html.DisplayFor(modelItem => item.Production_price)
+            </td>
+            <td style="border:solid 1px">
+                @Html.DisplayFor(modelItem => item.Sell_price)
+            </td>
+            <td style="border:solid 1px">
+                @Html.DisplayFor(modelItem => item.Stored_amount)
+            </td>
+            <td style="border:solid 1px">
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
     }
 
 </table>

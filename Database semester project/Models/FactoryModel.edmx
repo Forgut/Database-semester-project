@@ -12,24 +12,27 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Address" Type="varchar" MaxLength="50" />
-          <Property Name="Regular customer" Type="bit" Nullable="false" />
+          <Property Name="Regular_customer" Type="bit" Nullable="false" />
+          <Property Name="Edit_time" Type="datetime" />
         </EntityType>
         <EntityType Name="Employees">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="First name" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Last name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="First_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Last_name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="PESEL" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="Edit_time" Type="datetime" />
         </EntityType>
         <EntityType Name="Employyes_Tasks">
           <Key>
-            <PropertyRef Name="EmployeeID" />
-            <PropertyRef Name="TaskID" />
+            <PropertyRef Name="Employees_Id" />
+            <PropertyRef Name="Tasks_Id" />
           </Key>
-          <Property Name="EmployeeID" Type="int" Nullable="false" />
-          <Property Name="TaskID" Type="int" Nullable="false" />
+          <Property Name="Employees_Id" Type="int" Nullable="false" />
+          <Property Name="Tasks_Id" Type="int" Nullable="false" />
+          <Property Name="Edit_time" Type="datetime" />
         </EntityType>
         <EntityType Name="Ingredients">
           <Key>
@@ -38,7 +41,8 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Price" Type="float" Nullable="false" />
-          <Property Name="Stored amount" Type="int" Nullable="false" />
+          <Property Name="Stored_amount" Type="int" Nullable="false" />
+          <Property Name="Edit_time" Type="datetime" />
         </EntityType>
         <EntityType Name="Orders">
           <Key>
@@ -47,10 +51,11 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductID" Type="int" Nullable="false" />
           <Property Name="CustomerID" Type="int" Nullable="false" />
-          <Property Name="Product quantity" Type="int" Nullable="false" />
           <Property Name="Price" Type="float" Nullable="false" />
-          <Property Name="Delivery price" Type="float" Nullable="false" />
+          <Property Name="Delivery_price" Type="float" Nullable="false" />
+          <Property Name="Product_quantity" Type="int" Nullable="false" />
           <Property Name="Completed" Type="bit" Nullable="false" />
+          <Property Name="Edit_time" Type="datetime" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -58,9 +63,10 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Production price" Type="int" Nullable="false" />
-          <Property Name="Sell price" Type="int" Nullable="false" />
-          <Property Name="Stored amount" Type="int" Nullable="false" />
+          <Property Name="Production_price" Type="int" Nullable="false" />
+          <Property Name="Sell_price" Type="int" Nullable="false" />
+          <Property Name="Stored_amount" Type="int" Nullable="false" />
+          <Property Name="Edit_time" Type="datetime" />
         </EntityType>
         <EntityType Name="Products_Ingredients">
           <Key>
@@ -69,7 +75,8 @@
           </Key>
           <Property Name="ProductID" Type="int" Nullable="false" />
           <Property Name="IngredientID" Type="int" Nullable="false" />
-          <Property Name="Required ingredient amount" Type="int" Nullable="false" />
+          <Property Name="Required_ingredient_amount" Type="int" Nullable="false" />
+          <Property Name="Edit_time" Type="datetime" />
         </EntityType>
         <EntityType Name="Tasks">
           <Key>
@@ -77,36 +84,13 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductID" Type="int" Nullable="false" />
-          <Property Name="Predicted work time" Type="int" Nullable="false" />
-          <Property Name="Actual work time" Type="int" />
-          <Property Name="Produced quantity" Type="int" Nullable="false" />
+          <Property Name="Predicted_work_time" Type="int" Nullable="false" />
+          <Property Name="Actual_work_time" Type="int" />
           <Property Name="Finished" Type="bit" Nullable="false" />
+          <Property Name="Produced_quantity" Type="int" Nullable="false" />
+          <Property Name="Edit_time" Type="datetime" />
         </EntityType>
-        <Association Name="FK__Employyes__Emplo__5165187F">
-          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
-          <End Role="Employyes_Tasks" Type="Self.Employyes_Tasks" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employees">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Employyes_Tasks">
-              <PropertyRef Name="EmployeeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Employyes__TaskI__76969D2E">
-          <End Role="Tasks" Type="Self.Tasks" Multiplicity="1" />
-          <End Role="Employyes_Tasks" Type="Self.Employyes_Tasks" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tasks">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Employyes_Tasks">
-              <PropertyRef Name="TaskID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Orders__Customer__74AE54BC">
+        <Association Name="FK__Orders__Customer__4D94879B">
           <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
           <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
           <ReferentialConstraint>
@@ -118,7 +102,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Orders__ProductI__73BA3083">
+        <Association Name="FK__Orders__ProductI__4CA06362">
           <End Role="Products" Type="Self.Products" Multiplicity="1" />
           <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
           <ReferentialConstraint>
@@ -154,7 +138,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Tasks__ProductID__75A278F5">
+        <Association Name="FK__Tasks__ProductID__5AEE82B9">
           <End Role="Products" Type="Self.Products" Multiplicity="1" />
           <End Role="Tasks" Type="Self.Tasks" Multiplicity="*" />
           <ReferentialConstraint>
@@ -163,6 +147,30 @@
             </Principal>
             <Dependent Role="Tasks">
               <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employyes_Tasks_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="Employyes_Tasks" Type="Self.Employyes_Tasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employyes_Tasks">
+              <PropertyRef Name="Employees_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employyes_Tasks_Tasks">
+          <End Role="Tasks" Type="Self.Tasks" Multiplicity="1" />
+          <End Role="Employyes_Tasks" Type="Self.Employyes_Tasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tasks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employyes_Tasks">
+              <PropertyRef Name="Tasks_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -175,19 +183,11 @@
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products_Ingredients" EntityType="Self.Products_Ingredients" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tasks" EntityType="Self.Tasks" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Employyes__Emplo__5165187F" Association="Self.FK__Employyes__Emplo__5165187F">
-            <End Role="Employees" EntitySet="Employees" />
-            <End Role="Employyes_Tasks" EntitySet="Employyes_Tasks" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Employyes__TaskI__76969D2E" Association="Self.FK__Employyes__TaskI__76969D2E">
-            <End Role="Tasks" EntitySet="Tasks" />
-            <End Role="Employyes_Tasks" EntitySet="Employyes_Tasks" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Orders__Customer__74AE54BC" Association="Self.FK__Orders__Customer__74AE54BC">
+          <AssociationSet Name="FK__Orders__Customer__4D94879B" Association="Self.FK__Orders__Customer__4D94879B">
             <End Role="Customers" EntitySet="Customers" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK__Orders__ProductI__73BA3083" Association="Self.FK__Orders__ProductI__73BA3083">
+          <AssociationSet Name="FK__Orders__ProductI__4CA06362" Association="Self.FK__Orders__ProductI__4CA06362">
             <End Role="Products" EntitySet="Products" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
@@ -199,9 +199,17 @@
             <End Role="Products" EntitySet="Products" />
             <End Role="Products_Ingredients" EntitySet="Products_Ingredients" />
           </AssociationSet>
-          <AssociationSet Name="FK__Tasks__ProductID__75A278F5" Association="Self.FK__Tasks__ProductID__75A278F5">
+          <AssociationSet Name="FK__Tasks__ProductID__5AEE82B9" Association="Self.FK__Tasks__ProductID__5AEE82B9">
             <End Role="Products" EntitySet="Products" />
             <End Role="Tasks" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employyes_Tasks_Employees" Association="Self.FK_Employyes_Tasks_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Employyes_Tasks" EntitySet="Employyes_Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employyes_Tasks_Tasks" Association="Self.FK_Employyes_Tasks_Tasks">
+            <End Role="Tasks" EntitySet="Tasks" />
+            <End Role="Employyes_Tasks" EntitySet="Employyes_Tasks" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -217,6 +225,7 @@
           <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Regular_customer" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__Customer__4D94879B" FromRole="Customers" ToRole="Orders" />
+          <Property Name="Edit_time" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Employees">
           <Key>
@@ -227,6 +236,7 @@
           <Property Name="Last_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PESEL" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Tasks" Relationship="Self.Employyes_Tasks" FromRole="Employees" ToRole="Tasks" />
+          <Property Name="Edit_time" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Ingredients">
           <Key>
@@ -237,6 +247,7 @@
           <Property Name="Price" Type="Double" Nullable="false" />
           <Property Name="Stored_amount" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Products_Ingredients" Relationship="Self.FK__Products___Ingre__571DF1D5" FromRole="Ingredients" ToRole="Products_Ingredients" />
+          <Property Name="Edit_time" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Orders">
           <Key>
@@ -251,6 +262,7 @@
           <NavigationProperty Name="Products" Relationship="Self.FK__Orders__ProductI__4CA06362" FromRole="Orders" ToRole="Products" />
           <Property Name="Product_quantity" Type="Int32" Nullable="false" />
           <Property Name="Completed" Type="Boolean" Nullable="false" />
+          <Property Name="Edit_time" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -264,6 +276,7 @@
           <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__ProductI__4CA06362" FromRole="Products" ToRole="Orders" />
           <NavigationProperty Name="Products_Ingredients" Relationship="Self.FK__Products___Produ__5629CD9C" FromRole="Products" ToRole="Products_Ingredients" />
           <NavigationProperty Name="Tasks" Relationship="Self.FK__Tasks__ProductID__5AEE82B9" FromRole="Products" ToRole="Tasks" />
+          <Property Name="Edit_time" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Products_Ingredients">
           <Key>
@@ -275,6 +288,7 @@
           <Property Name="Required_ingredient_amount" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Ingredients" Relationship="Self.FK__Products___Ingre__571DF1D5" FromRole="Products_Ingredients" ToRole="Ingredients" />
           <NavigationProperty Name="Products" Relationship="Self.FK__Products___Produ__5629CD9C" FromRole="Products_Ingredients" ToRole="Products" />
+          <Property Name="Edit_time" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Tasks">
           <Key>
@@ -288,6 +302,7 @@
           <NavigationProperty Name="Products" Relationship="Self.FK__Tasks__ProductID__5AEE82B9" FromRole="Tasks" ToRole="Products" />
           <NavigationProperty Name="Employees" Relationship="Self.Employyes_Tasks" FromRole="Tasks" ToRole="Employees" />
           <Property Name="Produced_quantity" Type="Int32" Nullable="false" />
+          <Property Name="Edit_time" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK__Orders__Customer__4D94879B">
           <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
@@ -390,94 +405,100 @@
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="FactoryModelStoreContainer" CdmEntityContainer="FactoryEntities">
-          <EntitySetMapping Name="Customers">
-            <EntityTypeMapping TypeName="FactoryModel.Customers">
-              <MappingFragment StoreEntitySet="Customers">
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="FactoryModelStoreContainer" CdmEntityContainer="FactoryEntities">
+    <EntitySetMapping Name="Customers">
+      <EntityTypeMapping TypeName="IsTypeOf(FactoryModel.Customers)">
+        <MappingFragment StoreEntitySet="Customers">
+          <ScalarProperty Name="Edit_time" ColumnName="Edit_time" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="Regular_customer" ColumnName="Regular customer" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Employees">
-            <EntityTypeMapping TypeName="FactoryModel.Employees">
-              <MappingFragment StoreEntitySet="Employees">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Regular_customer" ColumnName="Regular_customer" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employees">
+      <EntityTypeMapping TypeName="IsTypeOf(FactoryModel.Employees)">
+        <MappingFragment StoreEntitySet="Employees">
+          <ScalarProperty Name="Edit_time" ColumnName="Edit_time" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="First_name" ColumnName="First name" />
-                <ScalarProperty Name="Last_name" ColumnName="Last name" />
-                <ScalarProperty Name="PESEL" ColumnName="PESEL" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Ingredients">
-            <EntityTypeMapping TypeName="FactoryModel.Ingredients">
-              <MappingFragment StoreEntitySet="Ingredients">
+          <ScalarProperty Name="First_name" ColumnName="First_name" />
+          <ScalarProperty Name="Last_name" ColumnName="Last_name" />
+          <ScalarProperty Name="PESEL" ColumnName="PESEL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ingredients">
+      <EntityTypeMapping TypeName="IsTypeOf(FactoryModel.Ingredients)">
+        <MappingFragment StoreEntitySet="Ingredients">
+          <ScalarProperty Name="Edit_time" ColumnName="Edit_time" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="Stored_amount" ColumnName="Stored amount" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Orders">
-            <EntityTypeMapping TypeName="FactoryModel.Orders">
-              <MappingFragment StoreEntitySet="Orders">
-                <ScalarProperty Name="Completed" ColumnName="Completed" />
-                <ScalarProperty Name="Product_quantity" ColumnName="Product quantity" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Stored_amount" ColumnName="Stored_amount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Orders">
+      <EntityTypeMapping TypeName="IsTypeOf(FactoryModel.Orders)">
+        <MappingFragment StoreEntitySet="Orders">
+          <ScalarProperty Name="Edit_time" ColumnName="Edit_time" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Delivery_price" ColumnName="Delivery_price" />
+          <ScalarProperty Name="Product_quantity" ColumnName="Product_quantity" />
+          <ScalarProperty Name="Completed" ColumnName="Completed" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Products">
+      <EntityTypeMapping TypeName="IsTypeOf(FactoryModel.Products)">
+        <MappingFragment StoreEntitySet="Products">
+          <ScalarProperty Name="Edit_time" ColumnName="Edit_time" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Production_price" ColumnName="Production_price" />
+          <ScalarProperty Name="Sell_price" ColumnName="Sell_price" />
+          <ScalarProperty Name="Stored_amount" ColumnName="Stored_amount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Products_Ingredients">
+      <EntityTypeMapping TypeName="IsTypeOf(FactoryModel.Products_Ingredients)">
+        <MappingFragment StoreEntitySet="Products_Ingredients">
+          <ScalarProperty Name="Edit_time" ColumnName="Edit_time" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="Delivery_price" ColumnName="Delivery price" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Products">
-            <EntityTypeMapping TypeName="FactoryModel.Products">
-              <MappingFragment StoreEntitySet="Products">
+          <ScalarProperty Name="IngredientID" ColumnName="IngredientID" />
+          <ScalarProperty Name="Required_ingredient_amount" ColumnName="Required_ingredient_amount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tasks">
+      <EntityTypeMapping TypeName="IsTypeOf(FactoryModel.Tasks)">
+        <MappingFragment StoreEntitySet="Tasks">
+          <ScalarProperty Name="Edit_time" ColumnName="Edit_time" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Production_price" ColumnName="Production price" />
-                <ScalarProperty Name="Sell_price" ColumnName="Sell price" />
-                <ScalarProperty Name="Stored_amount" ColumnName="Stored amount" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Products_Ingredients">
-            <EntityTypeMapping TypeName="FactoryModel.Products_Ingredients">
-              <MappingFragment StoreEntitySet="Products_Ingredients">
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="IngredientID" ColumnName="IngredientID" />
-                <ScalarProperty Name="Required_ingredient_amount" ColumnName="Required ingredient amount" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tasks">
-            <EntityTypeMapping TypeName="FactoryModel.Tasks">
-              <MappingFragment StoreEntitySet="Tasks">
-                <ScalarProperty Name="Produced_quantity" ColumnName="Produced quantity" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="Predicted_work_time" ColumnName="Predicted work time" />
-                <ScalarProperty Name="Actual_work_time" ColumnName="Actual work time" />
-                <ScalarProperty Name="Finished" ColumnName="Finished" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <AssociationSetMapping Name="Employyes_Tasks" TypeName="FactoryModel.Employyes_Tasks" StoreEntitySet="Employyes_Tasks">
-            <EndProperty Name="Employees">
-              <ScalarProperty Name="Id" ColumnName="EmployeeID" />
-            </EndProperty>
-            <EndProperty Name="Tasks">
-              <ScalarProperty Name="Id" ColumnName="TaskID" />
-            </EndProperty>
-          </AssociationSetMapping>
-        </EntityContainerMapping>
-      </Mapping>
-    </edmx:Mappings>
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="Predicted_work_time" ColumnName="Predicted_work_time" />
+          <ScalarProperty Name="Actual_work_time" ColumnName="Actual_work_time" />
+          <ScalarProperty Name="Finished" ColumnName="Finished" />
+          <ScalarProperty Name="Produced_quantity" ColumnName="Produced_quantity" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="Employyes_Tasks" TypeName="FactoryModel.Employyes_Tasks" StoreEntitySet="Employyes_Tasks">
+      <EndProperty Name="Employees">
+        <ScalarProperty Name="Id" ColumnName="Employees_Id" />
+      </EndProperty>
+      <EndProperty Name="Tasks">
+        <ScalarProperty Name="Id" ColumnName="Tasks_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
@@ -491,7 +512,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>

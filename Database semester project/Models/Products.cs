@@ -27,6 +27,7 @@ namespace Database_semester_project.Models
         public int Production_price { get; set; }
         public int Sell_price { get; set; }
         public int Stored_amount { get; set; }
+        public Nullable<System.DateTime> Edit_time { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Orders> Orders { get; set; }

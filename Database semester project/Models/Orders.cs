@@ -21,6 +21,7 @@ namespace Database_semester_project.Models
         public double Delivery_price { get; set; }
         public int Product_quantity { get; set; }
         public bool Completed { get; set; }
+        public Nullable<System.DateTime> Edit_time { get; set; }
     
         public virtual Customers Customers { get; set; }
         public virtual Products Products { get; set; }

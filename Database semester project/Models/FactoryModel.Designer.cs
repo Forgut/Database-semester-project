@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\Stachu\source\repos\Database semester project\Database semester project\Models\FactoryModel.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\nalkit\Documents\BD_P\Database semester project\Models\FactoryModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

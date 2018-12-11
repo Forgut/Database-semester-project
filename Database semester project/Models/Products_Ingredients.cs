@@ -17,6 +17,7 @@ namespace Database_semester_project.Models
         public int ProductID { get; set; }
         public int IngredientID { get; set; }
         public int Required_ingredient_amount { get; set; }
+        public Nullable<System.DateTime> Edit_time { get; set; }
     
         public virtual Ingredients Ingredients { get; set; }
         public virtual Products Products { get; set; }

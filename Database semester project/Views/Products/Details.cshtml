@@ -3,7 +3,10 @@
 @{
     ViewBag.Title = "Details";
 }
-
+@if (TempData["errProduct_Details"] != null)
+{
+    @Html.Raw(TempData["errProduct_Details"])
+}
 <h2>Details</h2>
 
 <div>
@@ -52,7 +55,7 @@
                     @Html.ActionLink(ingredient.IngredientName, "../Ingredients/Details", new { id = ingredient.IngredientID })
                     @Html.Raw(ingredient.Required_ingredient_amount)
                     @Html.ActionLink("Change amount", "EditIngredientQuantity", new { productID = Model.Id, ingredientID = ingredient.IngredientID })
-                    @Html.ActionLink("Delete", "DeleteIngredientQuantity", new { productID = Model.Id, ingredientID = ingredient.IngredientID})
+                    @Html.ActionLink("Delete", "DeleteIngredientQuantity", new { productID = Model.Id, ingredientID = ingredient.IngredientID })
                 </dd>
             }
         }
@@ -60,12 +63,12 @@
         {
             <dd>
                 @Html.Raw("No ingredients yet")
-            </dd>   
+            </dd>
         }
         <dd>
             @if (Model.Products_Ingredients.Count() < new Database_semester_project.Models.FactoryEntities().Ingredients.Count())
             {
-            @Html.ActionLink("Add new", "AddIngredient", new { Model.Id })
+                @Html.ActionLink("Add new", "AddIngredient", new { Model.Id })
             }
         </dd>
 
@@ -78,10 +81,10 @@
             {
                 if (!task.Finished)
                 {
-                <dd>
-                    @Html.ActionLink(task.Id.ToString(), "../Tasks/Details", new { id = task.Id })
-                    @Html.ActionLink(" Complete", "../Tasks/Edit", new { id = task.Id })
-                </dd>
+                    <dd>
+                        @Html.ActionLink(task.Id.ToString(), "../Tasks/Details", new { id = task.Id })
+                        @Html.ActionLink(" Complete", "../Tasks/Edit", new { id = task.Id })
+                    </dd>
                 }
             }
         }

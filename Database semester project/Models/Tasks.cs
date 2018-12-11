@@ -18,7 +18,6 @@ namespace Database_semester_project.Models
         public Tasks()
         {
             this.Employees = new HashSet<Employees>();
-            ProductLocked = false;
         }
     
         public int Id { get; set; }
@@ -27,6 +26,7 @@ namespace Database_semester_project.Models
         public Nullable<int> Actual_work_time { get; set; }
         public bool Finished { get; set; }
         public int Produced_quantity { get; set; }
+        public Nullable<System.DateTime> Edit_time { get; set; }
     
         public virtual Products Products { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
