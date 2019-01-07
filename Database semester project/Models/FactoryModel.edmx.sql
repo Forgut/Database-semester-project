@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 12/09/2018 23:38:35
+-- Date Created: 01/07/2019 17:42:20
 -- Generated from EDMX file: C:\Users\nalkit\Documents\BD_P\Database semester project\Models\FactoryModel.edmx
 -- --------------------------------------------------
 
@@ -20,11 +20,11 @@ GO
 IF OBJECT_ID(N'[dbo].[FK__Orders__Customer__4D94879B]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Orders] DROP CONSTRAINT [FK__Orders__Customer__4D94879B];
 GO
-IF OBJECT_ID(N'[dbo].[FK__Products___Ingre__571DF1D5]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Products_Ingredients] DROP CONSTRAINT [FK__Products___Ingre__571DF1D5];
-GO
 IF OBJECT_ID(N'[dbo].[FK__Orders__ProductI__4CA06362]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Orders] DROP CONSTRAINT [FK__Orders__ProductI__4CA06362];
+GO
+IF OBJECT_ID(N'[dbo].[FK__Products___Ingre__571DF1D5]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Products_Ingredients] DROP CONSTRAINT [FK__Products___Ingre__571DF1D5];
 GO
 IF OBJECT_ID(N'[dbo].[FK__Products___Produ__5629CD9C]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Products_Ingredients] DROP CONSTRAINT [FK__Products___Produ__5629CD9C];
@@ -49,6 +49,9 @@ GO
 IF OBJECT_ID(N'[dbo].[Employees]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Employees];
 GO
+IF OBJECT_ID(N'[dbo].[Employyes_Tasks]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Employyes_Tasks];
+GO
 IF OBJECT_ID(N'[dbo].[Ingredients]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Ingredients];
 GO
@@ -64,9 +67,6 @@ GO
 IF OBJECT_ID(N'[dbo].[Tasks]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Tasks];
 GO
-IF OBJECT_ID(N'[dbo].[Employyes_Tasks]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Employyes_Tasks];
-GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -77,7 +77,8 @@ CREATE TABLE [dbo].[Customers] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Name] varchar(50)  NOT NULL,
     [Address] varchar(50)  NULL,
-    [Regular_customer] bit  NOT NULL
+    [Regular_customer] bit  NOT NULL,
+    [Edit_time] datetime  NULL
 );
 GO
 
@@ -86,7 +87,8 @@ CREATE TABLE [dbo].[Employees] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [First_name] varchar(50)  NOT NULL,
     [Last_name] varchar(50)  NOT NULL,
-    [PESEL] varchar(11)  NOT NULL
+    [PESEL] varchar(11)  NOT NULL,
+    [Edit_time] datetime  NULL
 );
 GO
 
@@ -95,7 +97,8 @@ CREATE TABLE [dbo].[Ingredients] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Name] varchar(50)  NOT NULL,
     [Price] float  NOT NULL,
-    [Stored_amount] int  NOT NULL
+    [Stored_amount] int  NOT NULL,
+    [Edit_time] datetime  NULL
 );
 GO
 
@@ -107,7 +110,8 @@ CREATE TABLE [dbo].[Orders] (
     [Price] float  NOT NULL,
     [Delivery_price] float  NOT NULL,
     [Product_quantity] int  NOT NULL,
-    [Completed] bit  NOT NULL
+    [Completed] bit  NOT NULL,
+    [Edit_time] datetime  NULL
 );
 GO
 
@@ -117,7 +121,8 @@ CREATE TABLE [dbo].[Products] (
     [Name] varchar(50)  NOT NULL,
     [Production_price] int  NOT NULL,
     [Sell_price] int  NOT NULL,
-    [Stored_amount] int  NOT NULL
+    [Stored_amount] int  NOT NULL,
+    [Edit_time] datetime  NULL
 );
 GO
 
@@ -125,7 +130,8 @@ GO
 CREATE TABLE [dbo].[Products_Ingredients] (
     [ProductID] int  NOT NULL,
     [IngredientID] int  NOT NULL,
-    [Required_ingredient_amount] int  NOT NULL
+    [Required_ingredient_amount] int  NOT NULL,
+    [Edit_time] datetime  NULL
 );
 GO
 
@@ -136,7 +142,8 @@ CREATE TABLE [dbo].[Tasks] (
     [Predicted_work_time] int  NOT NULL,
     [Actual_work_time] int  NULL,
     [Finished] bit  NOT NULL,
-    [Produced_quantity] int  NOT NULL
+    [Produced_quantity] int  NOT NULL,
+    [Edit_time] datetime  NULL
 );
 GO
 

@@ -89,9 +89,9 @@ namespace Database_semester_project.Controllers
                 var ingredient = (from i in db.Ingredients
                                   where i.Id == id
                                   select i).First();
-                db.Ingredients.Remove(ingredient);
             try
             {
+                db.Ingredients.Remove(ingredient);
                 db.SaveChanges();
             }
             catch(Exception e)

@@ -23,6 +23,10 @@ namespace Database_semester_project.Controllers
             var product = (from p in db.Products
                            where p.Id == id
                            select p).First();
+            if(TempData["errProduct_Details"] != null)
+            {
+                ViewBag.Exception = TempData["errProduct_Details"].ToString();
+            }
             return View(product);
         }
 
@@ -171,7 +175,7 @@ namespace Database_semester_project.Controllers
             }
             catch (Exception e)
             {
-                TempData["errProduct_addIngredient"] = e.Message;
+                TempData["errProduct_addIngredient"] = e.InnerException.Message;
                 return View(products_Ingredients);
             }
             return RedirectToAction("Details", new { id = products_Ingredients.ProductID });
@@ -182,6 +186,8 @@ namespace Database_semester_project.Controllers
             var products_ingredients = (from p in db.Products_Ingredients
                                         where p.ProductID == productID && p.IngredientID == ingredientID
                                         select p).First();
+            if (TempData["EditIngredientQuantity"] != null)
+                ViewBag.Exception = TempData["EditIngredientQuantity"].ToString();
             return View(products_ingredients);
         }
 
@@ -191,41 +197,52 @@ namespace Database_semester_project.Controllers
             if (!ModelState.IsValid)
                 return View(products_Ingredients);
 
-            var originalProducts_Ingredients = (from p in db.Products_Ingredients
-                                                where p.ProductID == products_Ingredients.ProductID && p.IngredientID == products_Ingredients.IngredientID
-                                                select p).First();
-
-            db.Entry(originalProducts_Ingredients).CurrentValues.SetValues(products_Ingredients);
-            try
-            {
-                db.SaveChanges();
-            }
-            catch(Exception e)
-            {
-                return View(products_Ingredients);
-            }
-
+            //Set needed variables
             var product = (from p in db.Products
                            where p.Id == products_Ingredients.ProductID
                            select p).First();
-            product.Production_price = (int)(from p in db.Products_Ingredients
-                                             join i in db.Ingredients on p.IngredientID equals i.Id
-                                             where p.ProductID == product.Id
-                                             select p.Required_ingredient_amount * i.Price).Sum();
 
-            var originalProduct = (from p in db.Products
-                                   where p.Id == product.Id
-                                   select p).First();
+            var ogProd_Ing = (from pi in db.Products_Ingredients
+                              where pi.ProductID == products_Ingredients.ProductID &&
+                              pi.IngredientID == products_Ingredients.IngredientID
+                              select pi).First();
 
-            db.Entry(originalProduct).CurrentValues.SetValues(product);
+            var ingredient = (from i in db.Ingredients
+                              where i.Id == products_Ingredients.IngredientID
+                              select i).First();
+
+            //Make necessaryy updates
             try
             {
+                //Check for possible edits
+                if (ogProd_Ing.Edit_time.ToString() == products_Ingredients.Edit_time.ToString())
+                {
+                    TempData["EditIngredientQuantity"] = "Data entry has just been edited!\nCurrent values:";
+                    RedirectToAction("EditIngredientQuantity", new { productID = product.Id, ingredientID = ingredient.Id });
+                }
+                //Make changes
+                product.Production_price += (products_Ingredients.Required_ingredient_amount -
+                    ogProd_Ing.Required_ingredient_amount) * (int)ingredient.Price;
+                ingredient.Stored_amount -= (products_Ingredients.Required_ingredient_amount - 
+                    ogProd_Ing.Required_ingredient_amount);
+
+                //Set edit time values
+                product.Edit_time = System.DateTime.UtcNow;
+                ingredient.Edit_time = System.DateTime.UtcNow;
+                products_Ingredients.Edit_time = System.DateTime.UtcNow;
+
+                //Update rows
+                db.Entry(ogProd_Ing).CurrentValues.SetValues(products_Ingredients);
+                db.Entry(product).CurrentValues.SetValues(product);
+                db.Entry(ingredient).CurrentValues.SetValues(ingredient);
+
+                //Save them to database
                 db.SaveChanges();
             }
             catch (Exception e)
             {
-                ViewBag.Exception = e.Message;
-                return View(products_Ingredients);
+                TempData["EditIngredientQuantity"] = e.Message;
+                return RedirectToAction("EditIngredientQuantity", new { productID = product.Id, ingredientID = ingredient.Id });
             }
 
             return RedirectToAction("Details", new { id = products_Ingredients.ProductID });
@@ -233,17 +250,37 @@ namespace Database_semester_project.Controllers
 
         public ActionResult DeleteIngredientQuantity(int productID, int ingredientID)
         {
-            var products_ingredients = (from p in db.Products_Ingredients
-                                        where p.IngredientID == ingredientID && p.ProductID == productID
-                                        select p).First();
+            //Setting the variables
+            var products_ingredients = (from pi in db.Products_Ingredients
+                                        where pi.IngredientID == ingredientID && pi.ProductID == productID
+                                        select pi).First();
+
             var ingredient = (from i in db.Ingredients
                               where i.Id == products_ingredients.IngredientID
                               select i).First();
 
-            ingredient.Stored_amount += products_ingredients.Required_ingredient_amount;
-            db.Entry(ingredient).CurrentValues.SetValues(ingredient);
-            db.Products_Ingredients.Remove(products_ingredients);
-            db.SaveChanges();
+            var product = (from p in db.Products
+                           where p.Id == products_ingredients.ProductID
+                           select p).First();
+            try
+            {
+                //Editing the variables
+                ingredient.Stored_amount += products_ingredients.Required_ingredient_amount;
+                product.Production_price -= (int)ingredient.Price * products_ingredients.Required_ingredient_amount;
+
+                //Updating and deleting rows
+                db.Entry(ingredient).CurrentValues.SetValues(ingredient);
+                db.Entry(product).CurrentValues.SetValues(product);
+                db.Products_Ingredients.Remove(products_ingredients);
+
+                //Saving changes
+                db.SaveChanges();
+            }
+            catch(Exception e)
+            {
+                TempData["errProduct_Details"] = e.Message;
+                return RedirectToAction("Details", new { id = products_ingredients.ProductID });
+            }
             return RedirectToAction("Details", new { id = products_ingredients.ProductID });
         }
     }
